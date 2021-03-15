@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1018650810190",
+    "project_id": "lootapp-d7d42",
+    "storage_bucket": "lootapp-d7d42.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1018650810190:android:2ca243686e4eef70c0f01f",
+        "android_client_info": {
+          "package_name": "com.hbernabe.loots"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1018650810190-rio3verepv1pbbqpqi26ppeakb08qv1f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hbernabe.loots",
+            "certificate_hash": "93cfecc3a7985aab84d2846ec0251acb82fcec0a"
+          }
+        },
+        {
+          "client_id": "1018650810190-rjf2kio12edc3gsso9iec20dl5g63mt8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAEGavEkUY3Piut_cvZ3Obw_BsUf6Rt76o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1018650810190-rjf2kio12edc3gsso9iec20dl5g63mt8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
