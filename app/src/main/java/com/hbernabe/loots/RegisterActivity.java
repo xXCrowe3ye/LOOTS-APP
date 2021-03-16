@@ -62,7 +62,7 @@ public class RegisterActivity extends AppCompatActivity
 
         if (TextUtils.isEmpty(name))
         {
-            Toast.makeText(this, "Please write your name...", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please write your email", Toast.LENGTH_SHORT).show();
         }
         else if (TextUtils.isEmpty(username))
         {
@@ -70,7 +70,7 @@ public class RegisterActivity extends AppCompatActivity
         }
         else if (TextUtils.isEmpty(password))
         {
-            Toast.makeText(this, "Please write your password...", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please write your password", Toast.LENGTH_SHORT).show();
         }
         else
         {

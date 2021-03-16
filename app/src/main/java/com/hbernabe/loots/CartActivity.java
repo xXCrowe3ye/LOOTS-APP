@@ -98,7 +98,7 @@ public class CartActivity extends AppCompatActivity
                     @Override
                     public void onClick(View view)
                     {
-                        CharSequence options[] = new CharSequence[]
+                        CharSequence options[] = new CharSequence[]    //Edit and remove Option for cart
                                 {
                                         "Edit",
                                         "Remove"

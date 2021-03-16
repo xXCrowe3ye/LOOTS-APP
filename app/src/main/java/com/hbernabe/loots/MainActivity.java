@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity
                 AllowAccess(UserNameKey, UserPasswordKey);
 
                 loadingBar.setTitle("Already Logged in");
-                loadingBar.setMessage("Please wait.....");
+                loadingBar.setMessage("Please wait");
                 loadingBar.setCanceledOnTouchOutside(false);
                 loadingBar.show();
             }
@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity
                 }
                 else
                 {
-                    Toast.makeText(MainActivity.this, "Account with this " + username + " number do not exists.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "Account with this " + username + " user do not exists.", Toast.LENGTH_SHORT).show();
                     loadingBar.dismiss();
                 }
             }
