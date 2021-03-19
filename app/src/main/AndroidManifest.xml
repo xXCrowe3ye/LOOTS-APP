@@ -19,13 +19,13 @@
             </intent-filter>
         </activity>
         <activity android:name=".CartActivity" />
-        <activity android:name=".ProductDetailsActivity" />
-        <activity android:name=".AdminCategoryActivity" />
-        <activity android:name=".AdminAddNewProductActivity" />
+        <activity android:name=".ProdDetailsManagerActivity" />
+        <activity android:name=".AddProdActivity" />
+        <activity android:name=".AddProdDetailsActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".LoginActivity" />
         <activity
-            android:name=".HomeActivity"
+            android:name=".HomeNavigationActivity"
             android:label="@string/title_activity_home"
             android:theme="@style/Theme.LOOTS.NoActionBar" />
         <activity android:name=".MainActivity">

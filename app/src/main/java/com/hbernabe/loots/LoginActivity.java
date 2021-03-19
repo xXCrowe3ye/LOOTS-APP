@@ -19,14 +19,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hbernabe.loots.Model.Users;
-import com.hbernabe.loots.Prevalent.Prevalent;
+import com.hbernabe.loots.PaperLoc.paperDb;
 
 public class LoginActivity extends AppCompatActivity
 {
-    private EditText InputUserName, InputPassword;
-    private Button LoginButton;
+    private EditText editTextUser, editTextPass;
+    private Button loginBtn;
     private ProgressDialog loadingBar;
-    private TextView AdminLink, NotAdminLink;
+    private TextView adminUse, normalUse;
 
     private String parentDbName = "Users";
 
@@ -38,42 +38,42 @@ public class LoginActivity extends AppCompatActivity
         setContentView(R.layout.activity_login);
 
 
-        LoginButton = (Button) findViewById(R.id.loginBtn);
-        InputPassword = (EditText) findViewById(R.id.loginPasswordInput);
-        InputUserName = (EditText) findViewById(R.id.loginUserNameInput);
-        AdminLink = (TextView) findViewById(R.id.adminPanel);
-        NotAdminLink = (TextView) findViewById(R.id.userPanel);
+        loginBtn = (Button) findViewById(R.id.loginBtn);
+        editTextPass = (EditText) findViewById(R.id.loginPasswordInput);
+        editTextUser = (EditText) findViewById(R.id.loginUserNameInput);
+        adminUse = (TextView) findViewById(R.id.adminLogIn);
+        normalUse = (TextView) findViewById(R.id.userLogIn);
         loadingBar = new ProgressDialog(this);
 
 
 
 
-        LoginButton.setOnClickListener(new View.OnClickListener() {
+        loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)
             {
-                LoginUser();
+                userLog();
             }
         });
 
-        AdminLink.setOnClickListener(new View.OnClickListener() { //changes login button in login layout to Admin login
+        adminUse.setOnClickListener(new View.OnClickListener() { //changes login button in login layout to Admin login
             @Override
             public void onClick(View view)
             {
-                LoginButton.setText("Login Admin");
-                AdminLink.setVisibility(View.INVISIBLE);
-                NotAdminLink.setVisibility(View.VISIBLE);
+                loginBtn.setText("Login Admin");
+                adminUse.setVisibility(View.INVISIBLE);
+                normalUse.setVisibility(View.VISIBLE);
                 parentDbName = "Admins";
             }
         });
 
-        NotAdminLink.setOnClickListener(new View.OnClickListener() { //returns to normal user login
+        normalUse.setOnClickListener(new View.OnClickListener() { //returns to normal user login
             @Override
             public void onClick(View view)
             {
-                LoginButton.setText("Login");
-                AdminLink.setVisibility(View.VISIBLE);
-                NotAdminLink.setVisibility(View.INVISIBLE);
+                loginBtn.setText("Login");
+                adminUse.setVisibility(View.VISIBLE);
+                normalUse.setVisibility(View.INVISIBLE);
                 parentDbName = "Users";
             }
         });
@@ -81,18 +81,18 @@ public class LoginActivity extends AppCompatActivity
 
 
 
-    private void LoginUser()
+    private void userLog()
     {
-        String username = InputUserName.getText().toString();
-        String password = InputPassword.getText().toString();
+        String username = editTextUser.getText().toString();
+        String password = editTextPass.getText().toString();
 
         if (TextUtils.isEmpty(username))
         {
-            Toast.makeText(this, "Please write your username", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Enter username", Toast.LENGTH_SHORT).show();
         }
         else if (TextUtils.isEmpty(password))
         {
-            Toast.makeText(this, "Please write your password", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Enter password", Toast.LENGTH_SHORT).show();
         }
         else
         {
@@ -102,13 +102,13 @@ public class LoginActivity extends AppCompatActivity
             loadingBar.show();
 
 
-            AllowAccessToAccount(username, password);
+            checkCredentials(username, password);
         }
     }
 
 
 
-    private void AllowAccessToAccount(final String username, final String password)
+    private void checkCredentials(final String username, final String password)
     {
 
         final DatabaseReference RootRef;
@@ -129,10 +129,10 @@ public class LoginActivity extends AppCompatActivity
                         {
                             if (parentDbName.equals("Admins"))
                             {
-                                Toast.makeText(LoginActivity.this, "Admin logged in Successfully", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LoginActivity.this, "Admin logged in", Toast.LENGTH_SHORT).show();
                                 loadingBar.dismiss();
 
-                                Intent intent = new Intent(LoginActivity.this, AdminCategoryActivity.class);
+                                Intent intent = new Intent(LoginActivity.this, AddProdActivity.class);
                                 startActivity(intent);
                             }
                             else if (parentDbName.equals("Users"))
@@ -140,15 +140,15 @@ public class LoginActivity extends AppCompatActivity
                                 Toast.makeText(LoginActivity.this, "logged in Successfully", Toast.LENGTH_SHORT).show();
                                 loadingBar.dismiss();
 
-                                Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                                Prevalent.currentOnlineUser = usersData;
+                                Intent intent = new Intent(LoginActivity.this, HomeNavigationActivity.class);
+                                paperDb.currentUser = usersData;
                                 startActivity(intent);
                             }
                         }
                         else
                         {
                             loadingBar.dismiss();
-                            Toast.makeText(LoginActivity.this, "Password is incorrect.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "Wrong Password", Toast.LENGTH_SHORT).show();
                         }
                     }
                 }

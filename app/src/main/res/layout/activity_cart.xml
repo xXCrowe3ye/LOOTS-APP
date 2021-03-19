@@ -48,11 +48,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/rLayout1"
-        android:layout_above="@+id/nextBtn">
+        android:layout_above="@+id/checkoutBtn">
     </androidx.recyclerview.widget.RecyclerView>
 
     <Button
-        android:id="@+id/nextBtn"
+        android:id="@+id/checkoutBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

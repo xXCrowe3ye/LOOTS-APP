@@ -17,13 +17,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hbernabe.loots.Model.Users;
-import com.hbernabe.loots.Prevalent.Prevalent;
+import com.hbernabe.loots.PaperLoc.paperDb;
 
 import io.paperdb.Paper;
 
 public class MainActivity extends AppCompatActivity
 {
-    private Button joinNowButton, loginButton;
+    private Button createAccBtn, loginBtn;
     private ProgressDialog loadingBar;
 
 
@@ -34,15 +34,15 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
 
-        joinNowButton = (Button) findViewById(R.id.mainCreateBtn);
-        loginButton = (Button) findViewById(R.id.mainLoginBtn);
+        createAccBtn = (Button) findViewById(R.id.mainCreateBtn);
+        loginBtn = (Button) findViewById(R.id.mainLoginBtn);
         loadingBar = new ProgressDialog(this);
 
 
-        Paper.init(this);
+        Paper.init(this); // store data to local db
 
 
-        loginButton.setOnClickListener(new View.OnClickListener() {
+        loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)
             {
@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity
         });
 
 
-        joinNowButton.setOnClickListener(new View.OnClickListener() {
+        createAccBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)
             {
@@ -62,14 +62,14 @@ public class MainActivity extends AppCompatActivity
         });
 
 
-        String UserNameKey = Paper.book().read(Prevalent.UserNameKey);
-        String UserPasswordKey = Paper.book().read(Prevalent.UserPasswordKey);
+        String UserNameKey = Paper.book().read(paperDb.UserNameKey);
+        String UserPasswordKey = Paper.book().read(paperDb.UserPasswordKey);
 
         if (UserNameKey != "" && UserPasswordKey != "")
         {
             if (!TextUtils.isEmpty(UserNameKey)  &&  !TextUtils.isEmpty(UserPasswordKey))
             {
-                AllowAccess(UserNameKey, UserPasswordKey);
+                checkCredentials(UserNameKey, UserPasswordKey);
 
                 loadingBar.setTitle("Already Logged in");
                 loadingBar.setMessage("Please wait");
@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity
 
 
 
-    private void AllowAccess(final String username, final String password)
+    private void checkCredentials(final String username, final String password)
     {
         final DatabaseReference RootRef;
         RootRef = FirebaseDatabase.getInstance().getReference();
@@ -99,17 +99,17 @@ public class MainActivity extends AppCompatActivity
                     {
                         if (usersData.getPassword().equals(password))
                         {
-                            Toast.makeText(MainActivity.this, "Please wait, you are already logged in...", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MainActivity.this, "Please wait", Toast.LENGTH_SHORT).show();
                             loadingBar.dismiss();
 
-                            Intent intent = new Intent(MainActivity.this, HomeActivity.class);
-                            Prevalent.currentOnlineUser = usersData;
+                            Intent intent = new Intent(MainActivity.this, HomeNavigationActivity.class);
+                            paperDb.currentUser = usersData;
                             startActivity(intent);
                         }
                         else
                         {
                             loadingBar.dismiss();
-                            Toast.makeText(MainActivity.this, "Password is incorrect.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MainActivity.this, "Wrong Password", Toast.LENGTH_SHORT).show();
                         }
                     }
                 }

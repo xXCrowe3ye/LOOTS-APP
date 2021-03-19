@@ -2,17 +2,17 @@ package com.hbernabe.loots.Model;
 
 public class Cart
 {
-    private String pid, pname, price, quantity, discount;
+    private String pid, pname, price, quantity;
 
     public Cart() {
     }
 
-    public Cart(String pid, String pname, String price, String quantity, String discount) {
+    public Cart(String pid, String pname, String price, String quantity) {
         this.pid = pid;
         this.pname = pname;
         this.price = price;
         this.quantity = quantity;
-        this.discount = discount;
+
     }
 
     public String getPid() {
@@ -47,11 +47,5 @@ public class Cart
         this.quantity = quantity;
     }
 
-    public String getDiscount() {
-        return discount;
-    }
 
-    public void setDiscount(String discount) {
-        this.discount = discount;
-    }
 }

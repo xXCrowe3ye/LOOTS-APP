@@ -23,7 +23,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.hbernabe.loots.Model.Cart;
-import com.hbernabe.loots.Prevalent.Prevalent;
+import com.hbernabe.loots.PaperLoc.paperDb;
 import com.hbernabe.loots.ViewHolder.CartViewHolder;
 
 public class CartActivity extends AppCompatActivity
@@ -31,10 +31,10 @@ public class CartActivity extends AppCompatActivity
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
 
-    private Button NextProcessBtn;
-    private TextView txtTotalAmount, txtMsg1;
+    private Button CheckoutBtn;
+    private TextView txtViewTotalAmount;
 
-    private int overTotalPrice = 0;
+    private int totItemPrice = 0;
 
 
 
@@ -50,16 +50,15 @@ public class CartActivity extends AppCompatActivity
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        NextProcessBtn = (Button) findViewById(R.id.nextBtn);
-        txtTotalAmount = (TextView) findViewById(R.id.totPrice);
-        txtMsg1 = (TextView) findViewById(R.id.prodAddMsg);
+        CheckoutBtn = (Button) findViewById(R.id.checkoutBtn);
+        txtViewTotalAmount = (TextView) findViewById(R.id.totPrice);
 
 
-        NextProcessBtn.setOnClickListener(new View.OnClickListener() {
+        CheckoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)
             {
-                txtTotalAmount.setText("Total Price = ₱" + String.valueOf(overTotalPrice));
+                txtViewTotalAmount.setText("Total Price = ₱" + String.valueOf(totItemPrice));
             }
         });
     }
@@ -76,7 +75,7 @@ public class CartActivity extends AppCompatActivity
         FirebaseRecyclerOptions<Cart> options =
                 new FirebaseRecyclerOptions.Builder<Cart>()
                         .setQuery(cartListRef.child("User View")
-                                .child(Prevalent.currentOnlineUser.getUsername())
+                                .child(paperDb.currentUser.getUsername())
                                 .child("Products"), Cart.class)
                         .build();
 
@@ -91,8 +90,8 @@ public class CartActivity extends AppCompatActivity
 
                 //gets total price in the cart
 
-                int oneTypeProductTPrice = ((Integer.valueOf(model.getPrice()))) * Integer.valueOf(model.getQuantity());
-                overTotalPrice = overTotalPrice + oneTypeProductTPrice;
+                int currentTotalPrice = ((Integer.valueOf(model.getPrice()))) * Integer.valueOf(model.getQuantity());
+                totItemPrice = totItemPrice + currentTotalPrice;
 
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -112,14 +111,14 @@ public class CartActivity extends AppCompatActivity
                             {
                                 if (i == 0)
                                 {
-                                    Intent intent = new Intent(CartActivity.this, ProductDetailsActivity.class);
+                                    Intent intent = new Intent(CartActivity.this, ProdDetailsManagerActivity.class);
                                     intent.putExtra("pid", model.getPid());
                                     startActivity(intent);
                                 }
                                 if (i == 1)
                                 {
                                     cartListRef.child("User View")
-                                            .child(Prevalent.currentOnlineUser.getUsername())
+                                            .child(paperDb.currentUser.getUsername())
                                             .child("Products")
                                             .child(model.getPid())
                                             .removeValue()
@@ -131,7 +130,7 @@ public class CartActivity extends AppCompatActivity
                                                     {
                                                         Toast.makeText(CartActivity.this, "Item removed", Toast.LENGTH_SHORT).show();
 
-                                                        Intent intent = new Intent(CartActivity.this, HomeActivity.class);
+                                                        Intent intent = new Intent(CartActivity.this, HomeNavigationActivity.class);
                                                         startActivity(intent);
                                                     }
                                                 }
@@ -148,7 +147,7 @@ public class CartActivity extends AppCompatActivity
             @Override
             public CartViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
             {
-                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cart_items_layout, parent, false);
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.user_cart_items, parent, false);
                 CartViewHolder holder = new CartViewHolder(view);
                 return holder;
             }

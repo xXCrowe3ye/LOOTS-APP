@@ -2,15 +2,15 @@ package com.hbernabe.loots.Model;
 
 public class Users
 {
-    private String name, phone, password, image, address, username;
+    private String email, phone, password, image, address, username;
 
     public Users()
     {
 
     }
 
-    public Users(String name, String phone, String password, String image, String address, String username) {
-        this.name = name;
+    public Users(String email,String phone, String password, String image, String address, String username) {
+        this.email = email;
         this.phone = phone;
         this.password = password;
         this.image = image;
@@ -18,21 +18,14 @@ public class Users
         this.username = username;
     }
 
-    public String getName() {
-        return name;
+    public String getEmail() {
+        return email;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
 
     public String getPassword() {
         return password;
